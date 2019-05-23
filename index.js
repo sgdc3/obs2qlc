@@ -5,18 +5,15 @@ const WebSocket = require('ws');
 const Request = require('request-promise');
 const CheerIO = require('cheerio');
 
-const obsWsAddress = 'ws://127.0.0.1:4444';
-const qlcWsAddress = 'ws://127.0.0.1:9999/qlcplusWS';
-const qlcAddress = 'http://127.0.0.1:9999';
+const settings = require('./settings.json');
 
-var sceneMappings = {};
 var widgets = {};
 
 var obsSocket;
 var obsConnected = false;
 
 function initializeObsSocket() {
-    obsSocket = new WebSocket(obsWsAddress);
+    obsSocket = new WebSocket(settings.obsWsAddress);
 
     obsSocket.on('open', () => {
         obsConnected = true;
@@ -45,11 +42,11 @@ function initializeObsSocket() {
                 return;
             }
 
-            var buttonId = sceneMappings[sceneName];
+            var buttonId = settings.sceneMappings[sceneName];
 
             // Stop running show
-            for(var sceneName in sceneMappings) {
-                var currentButtonId = sceneMappings[sceneName];
+            for(var sceneName in settings.sceneMappings) {
+                var currentButtonId = settings.sceneMappings[sceneName];
                 if(buttonId == currentButtonId) {
                     continue;
                 }
@@ -83,12 +80,12 @@ var qlcSocket;
 var qlcConnected = false;
 
 function initializeQlcSocket() {
-    qlcSocket = new WebSocket(qlcWsAddress);
+    qlcSocket = new WebSocket(settings.qlcWsAddress);
 
     qlcSocket.on('open', () => {
         // Update widget status...
         widgets = {};
-        Request(qlcAddress)
+        Request(settings.qlcWebAddress)
             .then(html => {
                 var $ = CheerIO.load(html);
                 $('.vcbutton').each((index, entry) => {
@@ -138,7 +135,6 @@ function initializeQlcSocket() {
 };
 
 // Initialize
-sceneMappings = JSON.parse(FileSystem.readFileSync('mappings.json'));
 initializeObsSocket();
 initializeQlcSocket();
 console.log('Ready!');

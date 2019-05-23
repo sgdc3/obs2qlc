@@ -1,0 +1,9 @@
+{
+    "obsWsAddress": "ws://127.0.0.1:4444",
+    "qlcWsAddress": "ws://127.0.0.1:9999/qlcplusWS",
+    "qlcWebAddress": "http://127.0.0.1:9999",
+    "sceneMappings": {        
+        "Test 1": "0",
+        "Test 2": "1"
+    }
+}
