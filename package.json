@@ -6,15 +6,23 @@
   "scripts": {
     "start": "node index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sgdc3/obs2qlc.git"
+  },
   "keywords": [
     "obs",
     "qlc",
-    "streaming",
-    "dmx",
+    "qlcplus",
+    "stream",
     "websocket"
   ],
   "author": "sgdc3",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sgdc3/obs2qlc/issues"
+  },
+  "homepage": "https://github.com/sgdc3/obs2qlc#readme",
   "dependencies": {
     "cheerio": "^1.0.0-rc.3",
     "request": "^2.88.0",
