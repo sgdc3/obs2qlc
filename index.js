@@ -1,5 +1,6 @@
 "use strict";
 
+const FileSystem = require('fs');
 const WebSocket = require('ws');
 const Request = require('request-promise');
 const CheerIO = require('cheerio');
@@ -8,17 +9,13 @@ const obsWsAddress = 'ws://127.0.0.1:4444';
 const qlcWsAddress = 'ws://127.0.0.1:9999/qlcplusWS';
 const qlcAddress = 'http://127.0.0.1:9999';
 
-const sceneMappings = {
-    '01: MACRI': '115',
-    '02: TEST': '117'
-};
-
 var obsSocket = new WebSocket(obsWsAddress);
 var obsConnected = false;
 
 var qlcSocket = new WebSocket(qlcWsAddress);
 var qlcConnected = false;
 
+var sceneMappings = {};
 var widgets = {};
 
 obsSocket.on('open', () => {
@@ -108,3 +105,7 @@ qlcSocket.on('message', (data) => {
         }
     }
 });
+
+// Initialize
+sceneMappings = JSON.parse(FileSystem.readFileSync('mappings.json'));
+console.log('Ready!');
